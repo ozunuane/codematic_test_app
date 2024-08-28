@@ -81,7 +81,7 @@ jobs:
         kubectl config set-context $CONTEXT
         ./kustomize edit set image gcr.io/PROJECT_ID/IMAGE=gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA
         kubectl apply -k .
-        kubectl rollout status deployment/${{env.DEPLOYMENT_NAME}} --namespace 
+        kubectl rollout status deployment/${{env.DEPLOYMENT_NAME}} --namespace codematic
         kubectl get services -o wide
     
 
