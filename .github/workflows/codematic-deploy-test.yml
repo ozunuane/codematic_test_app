@@ -15,7 +15,7 @@ env:
   IMAGE: ozunuane/service-codematic
   IMAGE_TAG: $GITHUB_SHA
   # CONTEXT: ${{ secrets.GKE_CONTEXT }}
-  CONTEXT: current
+  CONTEXT: --current
   GKE_SA: ${{ secrets.GKE_SA }}
   
 jobs:
