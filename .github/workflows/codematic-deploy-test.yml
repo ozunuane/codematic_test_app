@@ -12,9 +12,9 @@ env:
   GKE_CLUSTER: ${{ secrets.GKE_CLUSTER_DEMO }}   # Add your cluster name here.
   GKE_ZONE: ${{ secrets.GKE_ZONE }}   # Add your cluster zone here.
   DEPLOYMENT_NAME: afl-service-codematic # Add your deployment name here.
-  IMAGE: ozunuane/service-codemati
+  IMAGE: ozunuane/service-codematic
   IMAGE_TAG: $GITHUB_SHA
-  CONTEXT: ${{ secrets.GKE_CBA_CONTEXT }}
+  CONTEXT: ${{ secrets.GKE_CONTEXT }}
 
 jobs:
 
