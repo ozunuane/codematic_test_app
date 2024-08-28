@@ -12,10 +12,11 @@ env:
   GKE_CLUSTER: ${{ secrets.GKE_CLUSTER_DEMO }}   # Add your cluster name here.
   GKE_ZONE: ${{ secrets.GKE_ZONE }}   # Add your cluster zone here.
   DEPLOYMENT_NAME: afl-service-codematic # Add your deployment name here.
-  IMAGE: ozunuane/service-codemati
+  IMAGE: ozunuane/service-codematic
   IMAGE_TAG: $GITHUB_SHA
-  CONTEXT: ${{ secrets.GKE_CBA_CONTEXT }}
-
+  CONTEXT: ${{ secrets.GKE_CONTEXT }}
+  GKE_SA: ${{ secrets.GKE_SA }}
+  
 jobs:
 
   setup-build-publish-deploy:
@@ -28,12 +29,12 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    # Setup gcloud CLI
+   # Setup gcloud CLI
     - uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
       with:
-        service_account_key: ${{ secrets.GKE_SA_KEY }}
+        service_account_key: ${{ secrets.GKE_SA }}
         project_id: ${{ secrets.GKE_PROJECT }}
-
+      
     # Configure Docker to use the gcloud command-line tool as a credential
     # helper for authentication
     - run: |-
@@ -42,9 +43,12 @@ jobs:
     # Get the GKE credentials so we can deploy to the cluster
     - uses: google-github-actions/get-gke-credentials@fb08709ba27618c31c09e014e1d8364b02e5042e
       with:
-        cluster_name: ${{ env.GKE_CLUSTER }}
-        location: ${{ env.GKE_ZONE }}
+        cluster_name: ${{ secrets.GKE_CLUSTER_DEMO }}
+        location: ${{ secrets.GKE_ZONE }}  
         credentials: ${{ secrets.GKE_SA }}
+
+
+
 
     # Build the Docker image
     - name: Build
@@ -68,6 +72,7 @@ jobs:
         chmod u+x ./kustomize
 
 
+        
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-
