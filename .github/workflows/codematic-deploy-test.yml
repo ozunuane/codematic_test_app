@@ -1,9 +1,9 @@
 name: Build and Deploy to GKE
 
 on:
-  pull_request:
-    types:
-      - closed
+  push:
+    # types:
+    #   - closed
     branches:
       - develop
 
@@ -29,7 +29,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    # Setup gcloud CLI
+   # Setup gcloud CLI
     - uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
       with:
         service_account_key: ${{ secrets.GKE_SA }}
@@ -46,6 +46,7 @@ jobs:
         cluster_name: ${{ secrets.GKE_CLUSTER_DEMO }}
         location: ${{ secrets.GKE_ZONE }}  
         credentials: ${{ secrets.GKE_SA }}
+
 
 
 
