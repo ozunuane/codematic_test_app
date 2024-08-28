@@ -5,7 +5,7 @@ on:
     types:
       - closed
     branches:
-      - dev
+      - develop
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
@@ -45,6 +45,8 @@ jobs:
       with:
         cluster_name: ${{ env.GKE_CLUSTER }}
         location: ${{ env.GKE_ZONE }}  
+        credentials: ${{ secrets.GKE_SA }}
+
 
 
     # Build the Docker image
@@ -69,7 +71,7 @@ jobs:
         chmod u+x ./kustomize
 
 
-
+        
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-
