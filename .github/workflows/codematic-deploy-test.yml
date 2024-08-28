@@ -14,7 +14,8 @@ env:
   DEPLOYMENT_NAME: afl-service-codematic # Add your deployment name here.
   IMAGE: ozunuane/service-codematic
   IMAGE_TAG: $GITHUB_SHA
-  CONTEXT: ${{ secrets.GKE_CONTEXT }}
+  # CONTEXT: ${{ secrets.GKE_CONTEXT }}
+  CONTEXT: --current
   GKE_SA: ${{ secrets.GKE_SA }}
   
 jobs:
@@ -80,7 +81,7 @@ jobs:
         kubectl config set-context $CONTEXT
         ./kustomize edit set image gcr.io/PROJECT_ID/IMAGE=gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA
         kubectl apply -k .
-        kubectl rollout status deployment/${{env.DEPLOYMENT_NAME}} --namespace codematic
+        kubectl rollout status deployment/${{env.DEPLOYMENT_NAME}} --namespace 
         kubectl get services -o wide
     
 
