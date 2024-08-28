@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: codematic
+  labels:
+    name: codematic
+    istio-injection: enabled
+    
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: afl-service-codematic
+  namespace: codematic
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: afl-service-codematic
+  template:
+    metadata:
+      labels:
+        app: afl-service-codematic
+    spec:
+      containers:
+        - name: afl-service-codematic
+          image: gcr.io/PROJECT_ID/IMAGE
+          ports:
+            - containerPort: 3000
+  
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: afl-service-transfer
+  namespace: cba
+spec:
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 3000
+  type: ClusterIP
+  selector:
+    app: afl-service-codematic
