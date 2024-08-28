@@ -1,9 +1,9 @@
 name: Build and Deploy to GKE
 
 on:
-  push:
-    # types:
-    #   - closed
+  pull_request:
+    types:
+      - closed
     branches:
       - develop
 
